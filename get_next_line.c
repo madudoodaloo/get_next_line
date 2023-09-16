@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:16:35 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/15 15:43:02 by msilva-c         ###   ########.fr       */
+/*   Updated: 2023/09/16 22:57:32 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ char	*get_next_line(int fd)
 	line = NULL;
 	while (*buff || read(fd, buff, BUFFER_SIZE) > 0)
 	{
+		printf("%s\nsuccesfull buffer\n", buff);
 		line = ft_strjoin(line, buff);
+		printf("%s\nsuccesful line\n", line);
 		if (ft_clean(buff))
 			break ;
 	}
 	free(buff);
 	return (line);
 }
-/* 
-#include <stdio.h>
-#include <errno.h>
+
 int main()
 {
     int fd = open("tester.txt", O_RDONLY);
@@ -44,5 +44,5 @@ int main()
         perror("open problem");
     }
     char *line = get_next_line(fd);
-    printf("line is: \"$%s$\"", line);
-} */
+    printf("line is: %s", line);
+}
