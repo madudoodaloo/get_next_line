@@ -6,13 +6,13 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:16:04 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/17 01:29:15 by msilva-c         ###   ########.fr       */
+/*   Updated: 2023/09/17 23:09:00 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -42,7 +42,8 @@ char	*ft_strjoin(char *line, char *buff)
 		new[i] = line[i];
 		i++;
 	}
-	free(line);
+	if (line)
+		free(line);
 	while (buff[j])
 	{
 		new[i++] = buff[j];

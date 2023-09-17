@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:16:35 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/17 01:37:17 by msilva-c         ###   ########.fr       */
+/*   Updated: 2023/09/17 23:30:33 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	int			i;
 
 	i = 0;
-	if (BUFFER_SIZE < 0 || fd <= 0)
+	if (BUFFER_SIZE < 1 || fd < 0)
 	{
 		while (buff[i])
 			buff[i++] = 0;
@@ -35,7 +35,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include <errno.h>
+/* #include <errno.h>
  int main()
 {
 	int fd = 0;
@@ -56,7 +56,8 @@ char	*get_next_line(int fd)
 		if (line == NULL)
 			break ;
 		printf("%s$", line);
+		free(line);
 	}
-	free(line);
 	close(fd);
 }
+ */
