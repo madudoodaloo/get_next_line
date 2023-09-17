@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 18:18:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/17 01:44:35 by msilva-c         ###   ########.fr       */
+/*   Created: 2023/09/17 01:51:47 by msilva-c          #+#    #+#             */
+/*   Updated: 2023/09/17 01:53:36 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line_bonus.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+char	*get_next_line(int fd)
+{
+	static char	buff[BUFFER_SIZE + 1];
+	char		*line;
+	int			i;
 
-# endif
-
-# include <unistd.h>
-# include <fcntl.h>  
-# include <stdlib.h>
-# include <stdio.h>
-
-char	*get_next_line(int fd);
-char	*ft_strjoin(char *line, char *buff);
-int		ft_clean(char *buff);
-size_t	ft_strlen(char *str);
-
-#endif
+	i = 0;
+	if (BUFFER_SIZE < 0 || fd <= 0)
+	{
+		while (buff[i])
+			buff[i++] = 0;
+		return (NULL);
+	}
+	line = NULL;
+	while (buff[0] || read(fd, buff, BUFFER_SIZE) > 0)
+	{
+		line = ft_strjoin(line, buff);
+		if (ft_clean(buff))
+			break ;
+	}
+	return (line);
+}

@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:16:35 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/16 22:57:32 by msilva-c         ###   ########.fr       */
+/*   Updated: 2023/09/17 01:37:17 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,49 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buff;
+	static char	buff[BUFFER_SIZE + 1];
 	char		*line;
+	int			i;
 
-	if (BUFFER_SIZE < 0 || fd < 0)
-		return (NULL);
-	buff = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return (NULL);
-	line = NULL;
-	while (*buff || read(fd, buff, BUFFER_SIZE) > 0)
+	i = 0;
+	if (BUFFER_SIZE < 0 || fd <= 0)
 	{
-		printf("%s\nsuccesfull buffer\n", buff);
+		while (buff[i])
+			buff[i++] = 0;
+		return (NULL);
+	}
+	line = NULL;
+	while (buff[0] || read(fd, buff, BUFFER_SIZE) > 0)
+	{
 		line = ft_strjoin(line, buff);
-		printf("%s\nsuccesful line\n", line);
 		if (ft_clean(buff))
 			break ;
 	}
-	free(buff);
 	return (line);
 }
 
-int main()
+#include <errno.h>
+ int main()
 {
-    int fd = open("tester.txt", O_RDONLY);
-    if (fd < 0)
-    {
-        printf("error nr %d\n", errno);
-        perror("open problem");
-    }
-    char *line = get_next_line(fd);
-    printf("line is: %s", line);
+	int fd = 0;
+	char *line;
+	
+	if (BUFFER_SIZE < 0)
+		return (printf("invalid buffer size\n"));
+	fd = open("./tester.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		printf("invalid fd: %d, errno: %d\n", fd, errno);
+		perror("problem");
+		exit (0);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		printf("%s$", line);
+	}
+	free(line);
+	close(fd);
 }
