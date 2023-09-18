@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:51:47 by msilva-c          #+#    #+#             */
-/*   Updated: 2023/09/17 23:18:15 by msilva-c         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:53:03 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char	*get_next_line(int fd)
 	int			i;
 
 	i = 0;
-	if (BUFFER_SIZE < 1 || fd >= FOPEN_MAX || fd < 0)
+	if (BUFFER_SIZE < 1 || fd < 0)
 	{
-		if (fd > 0 && fd < FOPEN_MAX)
+		if (fd >= 0 && fd <= FOPEN_MAX)
 		{
 			while (buff[fd][i])
-				buff[fd][i++] = 0;
+				buff[fd][i++] = '\0';
 		}
 		return (NULL);
 	}
